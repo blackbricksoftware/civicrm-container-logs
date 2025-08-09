@@ -2,6 +2,7 @@
     "name": "blackbricksoftware/civicrm-container-logs",
     "description": "Write CiviCRM Logs to stderr. Useful for running CiviCRM inside a Docker container.",
     "type": "civicrm-ext",
+    "license": "AGPL-3.0",
     "autoload": {
         "psr-4": {
             "BlackBrickSoftware\\CiviCRMContainerLogs\\": "src/"
