@@ -1,0 +1,23 @@
+{
+    "name": "blackbricksoftware/civicrm-container-logs",
+    "description": "Write CiviCRM Logs to stderr. Useful for running CiviCRM inside a Docker container.",
+    "type": "civicrm-ext",
+    "autoload": {
+        "psr-4": {
+            "BlackBrickSoftware\\CiviCRMContainerLogs\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "David Hayes",
+            "email": "david@blackbrick.software"
+        }
+    ],
+    "support": {
+        "issues": "https://github.com/blackbricksoftware/civicrm-container-logs/issues"
+    },
+    "require": {
+        "php": "^8.1",
+        "monolog/monolog": "^3.9"
+    }
+}
