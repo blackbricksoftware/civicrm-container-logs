@@ -48,10 +48,10 @@ class Manager
                 $logLevel = Level::fromName(CIVICRM_CONTAINER_LOGS_LEVEL);
             }
 
-            $this->channels[$channel] = $this->getLogger($channel);
+            $logger = $this->getLogger($channel);
 
             $psrProcessor = new PsrLogMessageProcessor;
-            $this->channels[$channel]->pushProcessor($psrProcessor);
+            $logger->pushProcessor($psrProcessor);
 
             $handler = new StreamHandler('php://stderr', $logLevel);
 
@@ -59,6 +59,8 @@ class Manager
             $handler->setFormatter($formatter);
 
             $logger->pushHandler($handler);
+
+            $this->channels[$channel] = $logger;
 
             return $this->channels[$channel];
             
