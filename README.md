@@ -2,12 +2,9 @@
 
 This extension replaces the default CiviCRM log channels to send all logs to `stderr` (currently). This is especially useful when running CiviCRM inside a Docker container, as it allows logs to be consolidated and managed by the container runtime.
 
-The extension is designed for compatibility with FrankenPHP and matches its expected log format.
-
 ## Features
 
 - Redirects all CiviCRM logs to `stderr`
-- Matches FrankenPHP log formatting
 - Simplifies log management in containerized environments
 
 ## Usage
@@ -33,7 +30,6 @@ This constant accepts any value supported by [`\Monolog\Level`](https://seldaek.
  - **ALERT (550):** Action must be taken immediately. Example: Entire website down, database unavailable, etc. This should trigger the SMS alerts and wake you up.
  - **EMERGENCY (600):** Emergency: system is unusable.
 
-
 **Example usage:**
 
 ```php
@@ -44,9 +40,9 @@ This will ensure only warnings and more severe messages are logged.
 
 ## Requirements
 
+- PHP8.1 or newer
 - CiviCRM installation
 - Docker container environment (recommended)
-- FrankenPHP (optional, for log format compatibility)
 
 ## References
  - [Replace core logging with Monolog](https://lab.civicrm.org/extensions/monolog)
