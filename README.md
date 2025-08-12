@@ -15,7 +15,7 @@ This extension replaces the default CiviCRM log channels to send all logs to `st
 
 ## Configuration
 
-## Log Level Configuration
+### Log Level Configuration
 
 You can control the minimum log level emitted by this extension using the `CIVICRM_CONTAINER_LOGS_LEVEL` constant. Set this constant in your environment or configuration to filter logs according to severity. The log level defaults to `debug`;
 
