@@ -1,0 +1,38 @@
+name: Create Release with Custom Zip
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.1'
+          tools: composer:v2
+
+      - name: Install Composer dependencies
+        run: composer install --no-dev --optimize-autoloader
+
+      - name: Create extension directory and move files
+        run: |
+          mkdir container_logs
+          shopt -s extglob
+          mv !(container_logs|.git|.github) container_logs/
+
+      - name: Create release zip
+        run: zip -r container_logs.zip container_logs
+
+      - name: Create release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: container_logs.zip
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
