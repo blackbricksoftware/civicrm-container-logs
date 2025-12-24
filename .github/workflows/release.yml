@@ -23,14 +23,10 @@ jobs:
 
       - name: Create release zip
         run: |
-          cd ..
-          mv civicrm_container_logs container_logs
-          zip -r container_logs.zip container_logs \
-            -x "container_logs/.git/*" \
-            -x "container_logs/.github/*" \
-            -x "container_logs/.gitignore"
-          mv container_logs civicrm_container_logs
-          mv container_logs.zip civicrm_container_logs/
+          zip -r container_logs.zip . \
+            -x ".git/*" \
+            -x ".github/*" \
+            -x ".gitignore"
 
       - name: Create release
         uses: softprops/action-gh-release@v1
