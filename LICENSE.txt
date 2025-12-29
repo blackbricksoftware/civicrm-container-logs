@@ -1,5 +1,5 @@
 Package: container_logs
-Copyright (C) 2025, FIXME <FIXME>
+Copyright (C) 2025, David Hayes <david@blackbrick.software>
 Licensed under the GNU Affero Public License 3.0 (below).
 
 -------------------------------------------------------------------------------
