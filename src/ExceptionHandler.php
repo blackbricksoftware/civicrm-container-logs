@@ -20,10 +20,7 @@ class ExceptionHandler
         $exception = $event->exception;
 
         try {
-            $manager = \Civi::service('psr_log_manager');
-            $logger = $manager->getLog('exception');
-
-            $logger->error($exception->getMessage(), [
+            \Civi::log('exception')->error($exception->getMessage(), [
                 'exception_class' => get_class($exception),
                 'code' => $exception->getCode(),
                 'file' => $exception->getFile(),
@@ -41,8 +38,6 @@ class ExceptionHandler
     private static function fallbackLog(\Throwable $exception): void
     {
         $json = json_encode([
-            'level' => 'error',
-            'channel' => 'civicrm.exception',
             'message' => $exception->getMessage(),
             'context' => [
                 'exception_class' => get_class($exception),
@@ -50,6 +45,11 @@ class ExceptionHandler
                 'file' => $exception->getFile(),
                 'line' => $exception->getLine(),
             ],
+            'level' => 400,
+            'level_name' => 'ERROR',
+            'channel' => 'civicrm.exception',
+            'datetime' => date('c'),
+            'extra' => new \stdClass(),
         ]);
         fwrite(STDERR, $json . "\n");
     }

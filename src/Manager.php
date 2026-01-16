@@ -53,7 +53,7 @@ class Manager
             $psrProcessor = new PsrLogMessageProcessor;
             $logger->pushProcessor($psrProcessor);
 
-            $handler = new StreamHandler('php://stderr', $logLevel);
+            $handler = new StreamHandler(STDERR, $logLevel);
 
             $formatter = new JsonFormatter;
             $handler->setFormatter($formatter);

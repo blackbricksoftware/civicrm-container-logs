@@ -2,7 +2,7 @@
 
 require_once 'container_logs.civix.php';
 
-use CRM_StderrLog_ExtensionUtil as E;
+use CRM_ContainerLogs_ExtensionUtil as E;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
 
@@ -20,6 +20,15 @@ if (file_exists($autoloadPath)) {
 function container_logs_civicrm_config(&$config): void
 {
     _container_logs_civix_civicrm_config($config);
+
+    // Pre-register our Log_file class before PEAR Log can load the original
+    // This intercepts all CRM_Core_Error::debug_log_message() calls
+    if (!class_exists('Log_file', false)) {
+        class_alias(
+            \BlackBrickSoftware\CiviCRMContainerLogs\LogFile::class,
+            'Log_file'
+        );
+    }
 }
 
 /**
