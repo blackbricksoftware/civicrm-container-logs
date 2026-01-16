@@ -49,5 +49,15 @@ function container_logs_civicrm_enable(): void
  */
 function container_logs_civicrm_container(ContainerBuilder $container): void
 {
+  // Replace the PSR log manager with our stderr-based implementation
   $container->setDefinition('psr_log_manager', new Definition('\BlackBrickSoftware\CiviCRMContainerLogs\Manager', []))->setPublic(true);
+
+  // Register exception listener at high priority (before legacy handler at -200)
+  // ref: https://docs.civicrm.org/dev/en/latest/hooks/usage/symfony/
+  $container->findDefinition('dispatcher')
+    ->addMethodCall('addListener', [
+      'hook_civicrm_unhandled_exception',
+      [\BlackBrickSoftware\CiviCRMContainerLogs\ExceptionHandler::class, 'handle'],
+      100,
+    ]);
 }

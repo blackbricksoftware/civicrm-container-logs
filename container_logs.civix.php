@@ -6,10 +6,10 @@
  * The ExtensionUtil class provides small stubs for accessing resources of this
  * extension.
  */
-class CRM_StderrLog_ExtensionUtil {
+class CRM_ContainerLogs_ExtensionUtil {
   const SHORT_NAME = 'container_logs';
   const LONG_NAME = 'container_logs';
-  const CLASS_PREFIX = 'CRM_StderrLog';
+  const CLASS_PREFIX = 'CRM_ContainerLogs';
 
   /**
    * Translate a string using the extension's domain.
@@ -77,7 +77,7 @@ class CRM_StderrLog_ExtensionUtil {
 
 }
 
-use CRM_StderrLog_ExtensionUtil as E;
+use CRM_ContainerLogs_ExtensionUtil as E;
 
 /**
  * (Delegated) Implements hook_civicrm_config().
