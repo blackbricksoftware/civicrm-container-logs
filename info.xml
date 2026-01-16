@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <extension key="container_logs" type="module">
   <file>container_logs</file>
-  <name>stderr Log</name>
+  <name>Container Logs</name>
   <description>Write CiviCRM Logs to stderr. Useful for running CiviCRM inside a Docker container.</description>
   <license>AGPL-3.0</license>
   <authors>
@@ -17,8 +17,8 @@
     <url desc="Support">https://github.com/blackbricksoftware/civicrm-container-logs/issues</url>
     <url desc="Licensing">https://www.gnu.org/licenses/agpl-3.0.html</url>
   </urls>
-  <releaseDate>2026-01-15</releaseDate>
-  <version>1.0.6</version>
+  <releaseDate>2026-01-16</releaseDate>
+  <version>1.0.7</version>
   <develStage>beta</develStage>
   <compatibility>
     <ver>6.5</ver>
