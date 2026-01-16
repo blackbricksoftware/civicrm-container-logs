@@ -31,25 +31,58 @@ class LogFile extends \Log
         }
     }
 
+    /**
+     * Destructor (no-op for stderr).
+     */
+    public function log_file_destructor(): void
+    {
+        if ($this->opened) {
+            $this->close();
+        }
+    }
+
+    /**
+     * Open the log (no-op for stderr).
+     */
     public function open(): bool
     {
         $this->opened = true;
         return true;
     }
 
+    /**
+     * Close the log (no-op for stderr).
+     */
     public function close(): bool
     {
         $this->opened = false;
         return true;
     }
 
+    /**
+     * Flush the log (no-op for stderr).
+     */
     public function flush(): bool
     {
         return true;
     }
 
+    /**
+     * Log a message.
+     *
+     * CiviCRM sometimes passes string priorities (e.g., 'error') instead of
+     * PEAR_LOG_* constants, so we handle both types.
+     *
+     * @param mixed $message The message to log
+     * @param int|string|null $priority Priority level (PEAR_LOG_* constant or string name)
+     */
     public function log($message, ?int $priority = null): bool
     {
+        // Convert string priority to PEAR constant using parent's method
+        if (is_string($priority)) {
+            $priority = $this->stringToPriority($priority);
+        }
+
         if ($priority === null) {
             $priority = $this->priority;
         }
@@ -99,7 +132,9 @@ class LogFile extends \Log
             'datetime' => date('c'),
             'extra' => new \stdClass(),
         ]);
-        fwrite(STDERR, $json . "\n");
+        $stderr = fopen('php://stderr', 'w');
+        fwrite($stderr, $json . "\n");
+        fclose($stderr);
     }
 
     private function levelToMonologCode(string $level): int

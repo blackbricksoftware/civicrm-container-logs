@@ -51,6 +51,8 @@ class ExceptionHandler
             'datetime' => date('c'),
             'extra' => new \stdClass(),
         ]);
-        fwrite(STDERR, $json . "\n");
+        $stderr = fopen('php://stderr', 'w');
+        fwrite($stderr, $json . "\n");
+        fclose($stderr);
     }
 }
