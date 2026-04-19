@@ -17,26 +17,27 @@ This extension replaces the default CiviCRM log channels to send all logs to `st
 
 ### Log Level Configuration
 
-You can control the minimum log level emitted by this extension using the `CIVICRM_CONTAINER_LOGS_LEVEL` constant. Set this constant in your environment or configuration to filter logs according to severity. The log level defaults to `debug`;
+The minimum log level can be set three ways, highest precedence first:
 
-This constant accepts any value supported by [`\Monolog\Level`](https://seldaek.github.io/monolog/doc/01-usage.html#log-levels). Monolog supports the logging levels described by [RFC 5424](https://datatracker.ietf.org/doc/html/rfc5424).
+1. **PHP constant** in `civicrm.settings.php`:
+   `define('CIVICRM_CONTAINER_LOGS_LEVEL', 'warning');`
+2. **Environment variable** (recommended for containerised deployments):
+   `CIVICRM_CONTAINER_LOGS_LEVEL=warning` — picked up natively by CiviCRM's
+   `SettingsManager` because the setting metadata declares
+   `is_env_loadable: TRUE`, `global_name: 'CIVICRM_CONTAINER_LOGS_LEVEL'`.
+3. **`$civicrm_setting` in `civicrm.settings.php`**:
+   `$civicrm_setting['domain']['container_logs_level'] = 'warning';`
 
- - **DEBUG (100):** Detailed debug information.
- - **INFO (200):** Interesting events. Examples: User logs in, SQL logs.
- - **NOTICE (250):** Normal but significant events.
- - **WARNING (300):** Exceptional occurrences that are not errors. Examples: Use of deprecated APIs, poor use of an API, undesirable things that are not necessarily wrong.
- - **ERROR (400):** Runtime errors that do not require immediate action but should typically be logged and monitored.
- - **CRITICAL (500):** Critical conditions. Example: Application component unavailable, unexpected exception.
- - **ALERT (550):** Action must be taken immediately. Example: Entire website down, database unavailable, etc. This should trigger the SMS alerts and wake you up.
- - **EMERGENCY (600):** Emergency: system is unusable.
+The setting is declared `is_constant: TRUE`, so attempts to write via
+`Civi::settings()->set(...)` / the API / the admin UI are rejected with
+a helpful error pointing to the three supported sources above.
 
-**Example usage:**
+Default: `debug` (everything passes through).
 
-```php
-define('CIVICRM_CONTAINER_LOGS_LEVEL', 'warning');
-```
+Accepted values are any Monolog level name (see [`\Monolog\Level`](https://seldaek.github.io/monolog/doc/01-usage.html#log-levels); values from [RFC 5424](https://datatracker.ietf.org/doc/html/rfc5424)):
 
-This will ensure only warnings and more severe messages are logged.
+ - **DEBUG (100)**, **INFO (200)**, **NOTICE (250)**, **WARNING (300)**,
+ - **ERROR (400)**, **CRITICAL (500)**, **ALERT (550)**, **EMERGENCY (600)**.
 
 ## Requirements
 

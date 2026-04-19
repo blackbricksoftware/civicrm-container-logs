@@ -70,6 +70,9 @@ class LogFile extends \Log
     /**
      * Log a message.
      *
+     * CiviCRM sometimes passes string priorities (e.g., 'error') instead of
+     * PEAR_LOG_* constants, so we handle both types.
+     *
      * @param mixed $message The message to log
      * @param int|string|null $priority Priority level (PEAR_LOG_* constant or string name)
      */

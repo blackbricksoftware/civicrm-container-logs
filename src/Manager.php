@@ -43,10 +43,14 @@ class Manager
                 throw new \RuntimeException('error triggered before stack fully loaded');
             }
 
-            $logLevel = Level::Debug;
-            if (defined('CIVICRM_CONTAINER_LOGS_LEVEL')) {
-                $logLevel = Level::fromName(CIVICRM_CONTAINER_LOGS_LEVEL);
-            }
+            // Precedence: PHP constant `CIVICRM_CONTAINER_LOGS_LEVEL`
+            // (e.g. `define(…)` in civicrm.settings.php) wins; otherwise
+            // read the Civi setting (which itself resolves env var →
+            // $civicrm_setting → DB → default).
+            $levelName = defined('CIVICRM_CONTAINER_LOGS_LEVEL')
+                ? (string) CIVICRM_CONTAINER_LOGS_LEVEL
+                : (string) (\Civi::settings()->get('container_logs_level') ?: 'debug');
+            $logLevel = Level::fromName($levelName);
 
             $logger = $this->getLogger($channel);
 
